@@ -1,13 +1,13 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "marte-ruby/version"
+require "marte/version"
 
 Gem::Specification.new do |s|
   s.name        = "marte-ruby"
-  s.version     = Marte::Ruby::VERSION
+  s.version     = Marte::VERSION
   s.authors     = ["Aldo Gordillo"]
   s.email       = ["iamchrono@gmail.com"]
-  s.homepage    = ""
+  s.homepage    = "https://github.com/ging/marte-ruby"
   s.summary     = "Gem summary"
   s.description = "Gem description"
 
