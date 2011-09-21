@@ -2,7 +2,6 @@ require 'hmac-sha1'
 
 
 module Marte
-    
   class Token < ActiveResource::Base
   
     self.site = "http://marte.dit.upm.es:5080/marte/service"
@@ -57,6 +56,12 @@ module Marte
       prefix_options, query_options = split_options(prefix_options) if query_options.nil?
       "#{prefix(prefix_options)}#{collection_name}/#{id}#{query_string(query_options)}"
     end
+
+    def self.embed_for(*args)
+      new.embed_for(*args)
+    rescue StandardError => e
+      "The following error ocurred with the conference server: #{ e }"
+    end
   
     def createToken(user, room)
       connection.post(collection_path, room, self.class.headers(user, attributes)) do |response|
@@ -96,11 +101,4 @@ module Marte
       end
     end
   end
-    
 end
-
-
-
-
-
-
