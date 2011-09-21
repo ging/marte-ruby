@@ -5,8 +5,8 @@ require "marte/version"
 Gem::Specification.new do |s|
   s.name        = "marte-ruby"
   s.version     = Marte::VERSION
-  s.authors     = ["Aldo Gordillo"]
-  s.email       = ["iamchrono@gmail.com"]
+  s.authors     = ["GING - UPM"]
+  s.email       = ["social-stream@dit.upm.es"]
   s.homepage    = "https://github.com/ging/marte-ruby"
   s.summary     = "Gem summary"
   s.description = "Gem description"
@@ -20,9 +20,9 @@ Gem::Specification.new do |s|
   
   
   # Gem dependencies
-  s.add_development_dependency "rspec", "2.1.0"
-  s.add_dependency "rails", "3.0.1"
-  s.add_dependency('activeresource', '~> 3.0.1')
+  s.add_development_dependency "rspec", "> 2.1.0"
+  s.add_dependency "rails", "> 3.0.1"
+  s.add_dependency('activeresource', '> 3.0.1')
   
 end
 
