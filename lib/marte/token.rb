@@ -33,8 +33,8 @@ module Marte
       cnonce=rand(1000000000)
   
       #now we prepare the signature. It is a HMAC:SHA1 of "timestamp,cnonce,username,ro
-      to_sign="#{timestamp},#{cnonce},#{user.name},#{role},#{ user.id }"
-      extra_header=",mauth_username=\"#{user.name}\",mauth_role=\"#{role}\",mauth_external_uid\=#{ user.id }"
+      to_sign="#{timestamp},#{cnonce},#{user.slug},#{role},#{ user.id }"
+      extra_header=",mauth_username=\"#{user.slug}\",mauth_role=\"#{role}\",mauth_external_uid\=#{ user.id }"
   
       #puts "cosas pa firmar " + to_sign
       signature=Base64.encode64(HMAC::SHA1.hexdigest(KEY, to_sign)).chomp.gsub(/\n/,'')
