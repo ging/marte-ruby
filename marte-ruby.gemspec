@@ -23,6 +23,7 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec", "> 2.1.0"
   s.add_dependency "rails", "> 3.0.1"
   s.add_dependency('activeresource', '> 3.0.1')
+  s.add_dependency('ruby-hmac')
   
 end
 
