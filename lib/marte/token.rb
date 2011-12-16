@@ -4,14 +4,15 @@ require 'hmac-sha1'
 module Marte
   class Token < ActiveResource::Base
   
-    self.site = "http://marte.dit.upm.es:5080/marte/service"
+    self.site = "http://marte4.dit.upm.es:5080/vaas/service"
     self.element_name = "token"
   
     KEY="secret"
     SERVICE_NAME="marteRed5"
     MAUTH_VERSION="3.1"
     MARTE_URL="marte.dit.upm.es"
-    SWF_FILE = "http://marte.dit.upm.es/system/MartEClient.swf"
+    ROOM_SWF_FILE = "http://marte.dit.upm.es/system/MartEClient.swf"
+    CHAT_SWF_FILE = "http://marte.dit.upm.es/system/MartEClient.swf"
   
     #define the headers to add Authentication
     def self.headers(user, attributes = {})
@@ -66,17 +67,18 @@ module Marte
     def embed_for(user, room, options = {})
       options[:width]  ||= 750
       options[:height] ||= 600
+      swf_file = ( options[:partner].present? ? ROOM_SWF_FILE : CHAT_SWF_FILE )
 
       token = createToken(user, room).body
   
       <<-EMBED
   <object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" id=\"MartEClient\" width=\"#{ options[:width] }\" height=\"#{ options[:height] }\" codebase=\"http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab\">
-                                  <param name=\"movie\" value=\" #{ SWF_FILE }\" />
+                                  <param name=\"movie\" value=\" #{ swf_file }\" />
                                   <param name=\"quality\" value=\"high\" />
                                   <param name=\"allowScriptAccess\" value=\"sameDomain\" />
                                   <param name=\"allowFullscreen\" value=\"true\" />
                                   <param name=\"flashVars\" value=\"token=#{token}&room=#{room}&bgcolor=#FFFFFF\" />
-                                  <embed src=\"#{ SWF_FILE }\" quality=\"high\" \"
+                                  <embed src=\"#{ swf_file }\" quality=\"high\" \"
                                           width=\"#{width_value}\" height=\"#{height_value}\" name=\"MartEClient\" align=\"top\" padding=\"0px 0px 0px 0px\"
                                           flashVars=\"token=#{token}&room=#{room}&bgcolor=#FFFFFF#{ "&partner=#{ options[:partner].slug }" if options[:partner] }\"
                                           play=\"true\"
