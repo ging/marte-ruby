@@ -13,13 +13,6 @@ module Marte
     MARTE_URL="marte.dit.upm.es"
     SWF_FILE = "http://marte.dit.upm.es/system/MartEClient.swf"
   
-  
-    #new is called MarteToken.new(:user=>'pepe', :role=>'admin', {:room_id=>'room_name'
-    #save is called MarteToken.save
-    #create is called MarteToken.create(:user=>'pepe', :role=>'admin', {:room_id=>'room
-    #delete is called MarteToken.delete(id)
-    #show is called MarteToken.find(:all)
-  
     #define the headers to add Authentication
     def self.headers(user, attributes = {})
       #get the params to fill in the headers
@@ -70,16 +63,14 @@ module Marte
       end
     end
   
-    def embed_for(user, room, mobile = false, width_value=750, height_value=600)
+    def embed_for(user, room, options = {})
+      options[:width]  ||= 750
+      options[:height] ||= 600
+
       token = createToken(user, room).body
   
-      if mobile
-  <<-EMBED
-  marte://params/#{token}/#{room}/#FFFFFF
-  EMBED
-      else
-  <<-EMBED
-  <object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" id=\"MartEClient\" width=\"#{width_value}\" height=\"#{height_value}\" codebase=\"http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab\">
+      <<-EMBED
+  <object classid=\"clsid:D27CDB6E-AE6D-11cf-96B8-444553540000\" id=\"MartEClient\" width=\"#{ options[:width] }\" height=\"#{ options[:height] }\" codebase=\"http://fpdownload.macromedia.com/get/flashplayer/current/swflash.cab\">
                                   <param name=\"movie\" value=\" #{ SWF_FILE }\" />
                                   <param name=\"quality\" value=\"high\" />
                                   <param name=\"allowScriptAccess\" value=\"sameDomain\" />
@@ -87,7 +78,7 @@ module Marte
                                   <param name=\"flashVars\" value=\"token=#{token}&room=#{room}&bgcolor=#FFFFFF\" />
                                   <embed src=\"#{ SWF_FILE }\" quality=\"high\" \"
                                           width=\"#{width_value}\" height=\"#{height_value}\" name=\"MartEClient\" align=\"top\" padding=\"0px 0px 0px 0px\"
-                                          flashVars=\"token=#{token}&room=#{room}&bgcolor=#FFFFFF\"
+                                          flashVars=\"token=#{token}&room=#{room}&bgcolor=#FFFFFF#{ "&partner=#{ options[:partner].slug }" if options[:partner] }\"
                                           play=\"true\"
                                           loop=\"false\"
                                           quality=\"high\"
@@ -97,8 +88,7 @@ module Marte
                                           pluginspage=\"http://www.adobe.com/go/getflashplayer\">
                                   </embed>
                             </object>
-  EMBED
-      end
+      EMBED
     end
   end
 end
