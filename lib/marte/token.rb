@@ -79,7 +79,7 @@ module Marte
                                   <param name=\"allowFullscreen\" value=\"true\" />
                                   <param name=\"flashVars\" value=\"token=#{token}&room=#{room}&bgcolor=#FFFFFF\" />
                                   <embed src=\"#{ swf_file }\" quality=\"high\" \"
-                                          width=\"#{width_value}\" height=\"#{height_value}\" name=\"MartEClient\" align=\"top\" padding=\"0px 0px 0px 0px\"
+                                          width=\"#{options[:width]}\" height=\"#{options[:height]}\" name=\"MartEClient\" align=\"top\" padding=\"0px 0px 0px 0px\"
                                           flashVars=\"token=#{token}&room=#{room}&bgcolor=#FFFFFF#{ "&partner=#{ options[:partner].slug }" if options[:partner] }\"
                                           play=\"true\"
                                           loop=\"false\"
